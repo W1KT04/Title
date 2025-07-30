@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Krypta - blog</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Krypta: Archiwum</h1>
+        {% if session.admin %}
+            <div class="admin-panel">
+                <span>ADMIN MODE</span>
+                <form action="/logout" method="POST">
+                    <button type="submit">Logout</button>
+                </form>
+            </div>
+        {% else %}
+            <form action="/login" method="POST" class="login-form">
+                <input type="password" name="password" placeholder="Admin password">
+                <button type="submit">Login</button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% for post in posts %}
+        <div class="post">
+            <div class="post-header">
+                <h2>{{ post[1] }}</h2>
+                {% if session.admin %}
+                    <form action="/delete_post/{{ post[0] }}" method="POST">
+                        <button type="submit" class="delete-btn">🗑️</button>
+                    </form>
+                {% endif %}
+            </div>
+            <p>{{ post[2] }}</p>
+
+            <form action="/add_comment/{{ post[0] }}" method="POST">
+                <input type="text" name="comment" placeholder="Dodaj komentarz..." required>
+                <button type="submit">Wyślij</button>
+            </form>
+
+            <div class="comments">
+                {% for comment in comments[post[0]] %}
+                    <div class="comment">
+                        <p>{{ comment[2] }}</p>
+                        {% if session.admin %}
+                            <form action="/delete_comment/{{ comment[0] }}" method="POST">
+                                <button type="submit" class="delete-btn">✕</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+    
+    <div class="footer">
+        <p>© 2007 Krypta Blog</p>
+    </div>
+</body>
+</html>

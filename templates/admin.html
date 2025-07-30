@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="admin-container">
+        <h1>Dodaj nowy wpis</h1>
+        <form action="/add_post" method="POST">
+            <input type="password" name="password" placeholder="Hasło admina" required><br>
+            <input type="text" name="title" placeholder="Tytuł" required><br>
+            <textarea name="content" placeholder="Treść wpisu..." required></textarea><br>
+            <button type="submit">Dodaj wpis</button>
+        </form>
+        <p><a href="/">← Powrót do bloga</a></p>
+    </div>
+</body>
+</html>
